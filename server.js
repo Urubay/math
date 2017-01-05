@@ -27,10 +27,49 @@ app.get("/solve", function (request, response) {
  // response.send("hallo maksym");
   //response.send("a = " + request.query.a + ", b = " + request.query.b + ", c = " + request.query.c);
   
-  var s = solveEquation(request.query.a, request.query.b, request.query.c); 
+  var pageContent;
   
-  response.send(s.info + "; D = "   +     s.D +     ", x1 &#8776 "     + s.x1 +     ", x2 &#8776 "     + s.x2);
+  if (request.query.a != 0) {
+    
+    var s = solveEquation(request.query.a, request.query.b, request.query.c); 
+    pageContent = s.info + "<br> <br> D = "   +     s.D +     "<br> <br> x1 &#8776 "     + s.x1 +     "<br> <br>  x2 &#8776 "     + s.x2;
+ 
+  } else {
+    
+    pageContent = "Bitte geben Sie den x<sup>2</sup>-Vorfaktor ein";
+    
+  }
   
+  
+ // response.send(s.info + "; D = "   +     s.D +     ", x1 &#8776 "     + s.x1 +     ", x2 &#8776 "     + s.x2);
+  response.send(""
+    + "<html>"
+    
+    +"<head>"
+       +'<meta charset="UTF-8"/> '
+       +'<meta name="viewport" content="width=device-width, initial-scale=1.0">'
+       +'<link media="(min-width:40px)" href="style.css" type="text/css" rel="stylesheet"/>'
+    +"</head>"
+    
+    + "<body>"
+    
+    +"<strong>"
+     + pageContent
+    +"</strong>" 
+    +"<br> <br>" 
+    
+    +'<input class="action" type="button" value="Zurück" onclick="history.back()">'
+    
+    +"</body>"
+    +"</html>"
+  );
+   
+  
+    
+    
+    
+    
+    
   //response.sendFile(__dirname + "/public/breed.html");
   
 });
@@ -47,14 +86,14 @@ function solveEquation(a, b, c) {
     
     solution.x1 = Math.round(  (((-b) - Math.sqrt(solution.D))/(2*a)) *100  )/100;
     solution.x2 = Math.round(  (((-b) + Math.sqrt(solution.D))/(2*a)) *100  )/100;
-    solution.info = ("succesfully solved");
+    solution.info = ("Erfolgreich gelöst!");
     
   
   } else {
     
-    solution.x1 = "Does not exist";
-    solution.x2 = "Does not exist";
-    solution.info = ("D < 0, --> cannot be solved");
+    solution.x1 = "Existiert nicht";
+    solution.x2 = "Existiert nicht";
+    solution.info = ("D < 0, --> Kann nicht gelöst werden:( ");
     
     
   }
@@ -78,3 +117,6 @@ x += x+1;
 if (x<0) { } else { }  
 
 console.log(x==0); */
+
+/*var a;
+console.log(0===0);*/
